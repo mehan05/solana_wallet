@@ -1,27 +1,17 @@
 "use client";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
-import { Keypair } from '@solana/web3.js';
-import { generateMnemonic, mnemonicToSeed } from 'bip39';
-import { derivePath } from 'ed25519-hd-key';
+import { generateMnemonic } from 'bip39';
 import React, { useState } from 'react'
-import nacl from 'tweetnacl';
 import Input from './(components)/Input';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 const CreateWallet = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const[mnemonic, setMnemonic] = useState(new Array(12).fill(' '));
   const handleMnemonic = async () => {
     const mnemonic = generateMnemonic();
     setMnemonic(mnemonic.split(' '));
-    const mnemonicSeed = await mnemonicToSeed(mnemonic);
-    const path = `m/44'/501'/${currentIndex}'/0'`;
-    const derivedSeed = derivePath(path, mnemonicSeed.toString('hex'));
-    const secret = nacl.sign.keyPair.fromSeed(derivedSeed.key);
-    const keyPair = Keypair.fromSecretKey(secret.secretKey);
-    setCurrentIndex(currentIndex + 1);
+    
   }
   console.log(mnemonic);
 

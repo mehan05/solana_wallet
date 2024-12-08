@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 import '@solana/wallet-adapter-react-ui/styles.css';
 import { WalletInterface } from "./home/(components)/Wallet-Interface";
 import CreateWallet from "./create_pharse/page";
+import { RecoilRoot } from "recoil";
 
 export default function Home() {
   
@@ -15,13 +16,15 @@ export default function Home() {
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
   return (
       <div>
-        <ConnectionProvider endpoint={endpoint}>
-            <WalletProvider wallets={[]}>
-                <WalletModalProvider>
-                    <WalletConnector/>
-                </WalletModalProvider>
-            </WalletProvider>
-        </ConnectionProvider>
+        <RecoilRoot>
+          <ConnectionProvider endpoint={endpoint}>
+              <WalletProvider wallets={[]}>
+                  <WalletModalProvider>
+                      <WalletConnector/>
+                  </WalletModalProvider>
+              </WalletProvider>
+          </ConnectionProvider>
+        </RecoilRoot>
       </div>
   );
 }
