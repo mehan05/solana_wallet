@@ -1,11 +1,13 @@
 "use client";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import Main from "./(main)/Main";
+import Main from "./home/Main";
 import { ConnectionProvider, useWallet, WalletProvider } from "@solana/wallet-adapter-react";
 import { WalletModalProvider, WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import '@solana/wallet-adapter-react-ui/styles.css';
+import { WalletInterface } from "./home/(components)/Wallet-Interface";
+import CreateWallet from "./create_pharse/page";
 
 export default function Home() {
   
@@ -25,12 +27,35 @@ export default function Home() {
 }
 
 const WalletConnector = ()=>{
-    const {publicKey,connected,signTransaction,disconnect} = useWallet();
+    const {publicKey,connected,signTransaction,disconnect,wallet} = useWallet();
+    const [isClient, setIsClient] = useState(false);
+    useEffect(() => {
+      if(localStorage.getItem("WalletConnected") === "true"){
+          wallet?.adapter?.connect();
+      }
+        
+    }, [connected,wallet]);
+  
+
+    useEffect(() => {
+      if(connected){
+        localStorage.setItem("WalletConnected","true");
+      }
+      else{
+        localStorage.setItem("WalletConnected","false");
+      }
+    })
+
+    useEffect(() => {
+      setIsClient(true); 
+    })
+    if (!isClient) return null; 
+
     return(
       <div className="flex justify-center items-center h-screen">
         {
           connected?(
-            <Main/>
+            <CreateWallet/>
           ):(
             <WalletMultiButton/>
           )

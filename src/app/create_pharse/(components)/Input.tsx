@@ -7,10 +7,11 @@ const Input = ({ index,vals }:{index:number,vals:string}) => {
       <input
         className="border-2 rounded-md border-gray-300 p-2 w-full text-center"
         type="text"
-        defaultValue={vals?vals:""}
+        value={vals}
         name={`input-${index}`}
         id={`input-${index}`}
         maxLength={12} 
+        readOnly
       />
     </div>
   );

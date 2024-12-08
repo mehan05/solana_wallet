@@ -6,11 +6,11 @@ import { Input } from "@/components/ui/input"
 import { ArrowLeft } from 'lucide-react'
 import Link from "next/link"
 
-interface SwapTransactionProps {
+interface ButTransactionProps {
   onBack: () => void
 }
 
-export default  function SwapTransaction({ onBack }: SwapTransactionProps) {
+export default  function ButTransaction({ onBack }: ButTransactionProps) {
   return (
     <div className="flex items-center justify-center min-h-screen shadow-lg shadow-purple-600">
 
@@ -26,7 +26,7 @@ export default  function SwapTransaction({ onBack }: SwapTransactionProps) {
               <ArrowLeft className="h-4 w-4 text-gray-400" />
             </Button>
           </Link>
-          <h2 className="text-xl font-semibold text-white">Swap SOL</h2>
+          <h2 className="text-xl font-semibold text-white">AirDrop SOL</h2>
         </CardHeader>
         <CardContent className="p-6 space-y-6">
           <div className="w-16 h-16 mx-auto rounded-full bg-gray-900" />
@@ -47,7 +47,7 @@ export default  function SwapTransaction({ onBack }: SwapTransactionProps) {
           </div>
 
           <Button className="w-full bg-gray-900 text-gray-400 hover:bg-gray-800">
-            Swap
+            AirDrop
           </Button>
         </CardContent>
       </Card>
