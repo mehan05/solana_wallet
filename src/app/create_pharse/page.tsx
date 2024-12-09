@@ -13,7 +13,6 @@ const CreateWallet = () => {
     setMnemonic(mnemonic.split(' '));
     
   }
-  console.log(mnemonic);
 
   const isMnemonicFilled = mnemonic.every((val) => val !== ' ');
 

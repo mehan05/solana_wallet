@@ -1,16 +1,19 @@
 "use client"
-
+import { send } from "@/components/core/send"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { ArrowLeft } from 'lucide-react'
 import Link from "next/link"
+import { useState } from "react"
 
 interface SendTransactionProps {
   onBack: () => void
 }
 
 export default  function SendTransaction({ onBack }: SendTransactionProps) {
+  const[recepientAddress,setRecepientAddress] = useState<string>("");
+  const[amount,setAmount] = useState<number>(0);
   return (
     <div className="flex items-center justify-center min-h-screen shadow-lg shadow-purple-600">
 
@@ -33,6 +36,8 @@ export default  function SendTransaction({ onBack }: SendTransactionProps) {
 
           <div className="space-y-2">
             <Input
+            type="text"
+            onChange={(e)=>setRecepientAddress(e.target.value)}
               placeholder="Address"
               className="bg-gray-900 border-gray-700 text-gray-400 placeholder:text-gray-500"
             />
@@ -42,11 +47,12 @@ export default  function SendTransaction({ onBack }: SendTransactionProps) {
             <Input
               placeholder="Amount"
               type="number"
+              onChange={(e)=>setAmount(Number(e.target.value))}
               className="bg-gray-900 border-gray-700 text-gray-400 placeholder:text-gray-500"
             />
           </div>
 
-          <Button className="w-full bg-gray-900 text-gray-400 hover:bg-gray-800">
+          <Button  onClick={()=>send(recepientAddress,amount)} className="w-full bg-gray-900 text-gray-400 hover:bg-gray-800">
             Send
           </Button>
         </CardContent>
