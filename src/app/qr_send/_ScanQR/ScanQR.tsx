@@ -6,12 +6,10 @@ import Link from 'next/link'
 import React, { useEffect, useRef } from 'react'
 import { createQR } from "@solana/pay";
 import { useWallet } from '@solana/wallet-adapter-react'
-import axios from 'axios'
-import { toast } from 'sonner'
+
 const ScanQR = () => {
   const SOLANA_PAY_URL  = "https://sol-wallet-seven.vercel.app/api"
   const qrRef = useRef<HTMLDivElement>(null);
-  const {publicKey,wallet} = useWallet();
   useEffect(() => {
     const qr = createQR(SOLANA_PAY_URL, 260, 'white', 'black');
 

@@ -1,4 +1,3 @@
-import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import {  NextRequest, NextResponse } from "next/server";
 
