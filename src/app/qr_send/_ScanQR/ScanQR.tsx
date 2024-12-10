@@ -5,7 +5,6 @@ import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useRef } from 'react'
 import { createQR } from "@solana/pay";
-import { useWallet } from '@solana/wallet-adapter-react'
 
 const ScanQR = () => {
   const SOLANA_PAY_URL  = "https://sol-wallet-seven.vercel.app/api"
@@ -46,7 +45,6 @@ const ScanQR = () => {
                     </div>
             </CardContent>
             <h2 className='text-xl font-semibold text-white'>Scan To Receive SOL</h2>
-            {/* <button onClick={sendPubKey} className='text-white'>Set public key</button> */}
           </div>
         </Card>
   </div>

@@ -25,7 +25,7 @@ export const POST = async(req:NextRequest)=>{
         lamports: 133700000
       })
       
-    let transaction = new Transaction();
+    const transaction = new Transaction();
     transaction.add(ix);
 
     const serializedTransaction = transaction.serialize()
