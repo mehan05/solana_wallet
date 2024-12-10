@@ -5,6 +5,8 @@ import { clusterApiUrl } from '@solana/web3.js'
 import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react'
 import '@solana/wallet-adapter-react-ui/styles.css';
+import { toast } from 'sonner';
+import axios from "axios";
 
 const Wallet = ({children}:{children:React.ReactNode}) => {
   return (
@@ -34,6 +36,22 @@ export const WalletConnector = ({children}:{children:React.ReactNode})=>{
     const {publicKey,connected,wallet} = useWallet();
     const [isClient, setIsClient] = useState(false);
    
+    useEffect(() => {
+          const sendPubKey = async()=>{
+            try {
+              
+              if(publicKey)
+              {
+                await axios.post("http://localhost:3000/api",{publicKey:publicKey})
+                console.log("request sent");
+              }
+            } catch (error) {
+                console.log(error);
+                toast.error("Something went wrong cant send public key. Try again");
+            }
+          }
+          sendPubKey();
+    },[wallet])
 
     useEffect(() => {
       if(localStorage.getItem("WalletConnected") === "true"){

@@ -15,16 +15,14 @@ export const GET = async()=>
 
 
 export const POST = async(req:NextRequest)=>{
-    const {publicKey} = useWallet();
     const accountField = req.body?.account;
-    // const amount = req.body?.amount;
     if (!accountField) throw new Error('missing account');
 
     
     const sender = new PublicKey(accountField);
     const ix = SystemProgram.transfer({
         fromPubkey: sender,
-        toPubkey: new PublicKey("APaynxjiBJBrEX5rqYBTbmSFN4NhPg6TKzkTmhG7URoX"),
+        toPubkey: new PublicKey("Ed59fPEf2dBjfwKHEJJWZBoWvzi8ieGJ9Rm1xcf1beSC"),
         lamports: 133700000
       })
       
@@ -36,5 +34,5 @@ export const POST = async(req:NextRequest)=>{
     const base64Transaction = Buffer.from(serializedTransaction).toString('base64');
     const message = 'Thank you for your purchase of ExiledApe #518';
 
-    NextResponse.json({ transaction: base64Transaction, message });
+   return  NextResponse.json({ transaction: base64Transaction, message });
 }
