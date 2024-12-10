@@ -1,11 +1,25 @@
+"use client"
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
-
+import React, { useEffect, useRef } from 'react'
+import { createQR } from "@solana/pay";
 const ScanQR = () => {
+  const SOLANA_PAY_URL  = "http://localhost:3000/api"
+  const qrRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const qr = createQR(SOLANA_PAY_URL, 260, 'white', 'black');
+
+    if (qrRef.current) {
+      qrRef.current.innerHTML = ''
+      qr.append(qrRef.current)
+      
+    } 
+  }, [])
+
+
   return (
     <div className="flex items-center justify-center min-h-screen shadow-lg shadow-purple-600 w-full">
 
@@ -24,10 +38,12 @@ const ScanQR = () => {
           </CardHeader>
           <div className='flex flex-col  space-y-9 items-center justify-center p-10'>
 
-            <CardContent className="p-6 space-y-6 w-[214px] h-[214px] border-2 border-purple-600 rounded-xl ">
+          <CardContent className="p-0 w-[260px] h-[260px] flex justify-center items-center border-4 border-purple-600 rounded-xl">
+                    <div  className=' h-full w-full rounded-xl   ' ref={qrRef}>
 
+                    </div>
             </CardContent>
-            <h2 className='text-xl font-semibold text-white'>Scan To Send SOL</h2>
+            <h2 className='text-xl font-semibold text-white'>Scan To Receive SOL</h2>
           </div>
         </Card>
   </div>
