@@ -1,10 +1,14 @@
-import Wallet from "@/app/(walletConnect)/Wallet";
 import { clusterApiUrl, Connection, LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from "@solana/web3.js"
 import { toast } from "sonner";
+type SignTransactionType = (transaction: Transaction) => Promise<Transaction>;
 
-export const SendSOl =async (publicKey:PublicKey|null,signTransaction:typeof Wallet["signTransaction"],address:string, amount:number)=>{
+export const SendSOl =async (publicKey:PublicKey|undefined,signTransaction:SignTransactionType,address:string, amount:number)=>{
 
     try {
+        if (!publicKey) {
+            toast.error("Wallet not available for signing");
+            return;
+          }
         const recipentAddress = new PublicKey(address);
         const Lamports = amount*LAMPORTS_PER_SOL;
      

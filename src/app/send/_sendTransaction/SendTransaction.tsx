@@ -16,16 +16,20 @@ export default  function SendTransaction() {
   const {publicKey,signTransaction} = useWallet();
   const handleSend = async ()=>{
     try {
-      
+            if (!publicKey ||  !signTransaction) {
+              toast.error("Wallet not connected");
+              return;
+            }
       const response = await SendSOl(publicKey,signTransaction,recepientAddress,amount);
       if(response) toast.success("SOL Sent");
       else toast.warning("Problem in Sending SOL")
 
-    } catch (error) {
-      console.log(error);
-          toast.error("Error in Sending SOL");
-    }
+    
+  }catch (error) {
+    console.log(error);
+        toast.error("Error in Sending SOL");
   }
+}
   return (
     <div className="flex items-center justify-center min-h-screen shadow-lg shadow-purple-600 w-full">
 
@@ -70,5 +74,6 @@ export default  function SendTransaction() {
       </Card>
     </div>
   )
-}
 
+
+}
