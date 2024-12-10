@@ -1,7 +1,5 @@
 import { Wallet } from "@solana/wallet-adapter-react";
-import { atom } from "recoil";
+import { atom } from "jotai";
 
-export const CoreDetails = atom<Wallet|null>({
-    key: "CoreDetails",
-    default: null
-})
+export const CoreDetails = atom<Wallet | null>(null);
+export const isConnected = atom<boolean>(false);

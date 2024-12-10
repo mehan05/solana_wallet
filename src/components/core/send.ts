@@ -3,7 +3,6 @@ import { CoreDetails } from "@/store/atom";
 import { clusterApiUrl, Connection, LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from "@solana/web3.js"
 import { useRecoilValue } from "recoil";
 import { toast } from "sonner";
-import { serialize } from "v8";
 
 export const send =async (address:string, amount:number)=>{
     try {
@@ -28,7 +27,7 @@ export const send =async (address:string, amount:number)=>{
 
         const signedTransaction = await Wallet.signTransaction(transaction);
 
-        const signature = await connection.sendRawTransaction(serialize(signedTransaction));
+        const signature = await connection.sendRawTransaction(signedTransaction.seralize());
 
         await connection.confirmTransaction(signature);
     } catch (error) {

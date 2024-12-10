@@ -8,6 +8,7 @@ import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
 import Wallet from "./(walletConnect)/Wallet";
 import { Toaster } from "sonner";
+import JotaiWrapper from "./(jotaiWrapper)/jotaiWrapper";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,14 +35,13 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-900`}
-
       > 
-        <Wallet>
-
-           {children}
-        </Wallet>
-        <Toaster/>
-         
+       <JotaiWrapper>
+          <Wallet>
+            {children}
+          </Wallet>
+          <Toaster/>
+        </JotaiWrapper>
       </body>
     </html>
   );
