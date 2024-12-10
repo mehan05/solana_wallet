@@ -13,8 +13,9 @@ interface ButTransactionProps {
   onBack: () => void
 }
 
-export default  function ButTransaction({ onBack }: ButTransactionProps) {
-    const [amount, setAmount] = useState(0)
+const ButTransaction: React.FC<ButTransactionProps> = ({ onBack }) => {
+  const [amount, setAmount] = useState(0)
+
     const[address,setAddress] = useState("");
 
 
@@ -64,3 +65,4 @@ export default  function ButTransaction({ onBack }: ButTransactionProps) {
   )
 }
 
+export default ButTransaction;
