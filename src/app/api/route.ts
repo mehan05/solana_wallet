@@ -1,10 +1,12 @@
-import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
+import { Connection, PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import {  NextRequest, NextResponse } from "next/server";
 
 export const GET = async()=>
 {
     const label = 'MEHAN Pay';
   const icon = 'https://avatars.githubusercontent.com/u/115608700?s=400&u=bf831a92813772fb388568f5227f3dc68debead7&v=4';
+  console.log("incomming request");
+
 
  return NextResponse.json({
       label,
@@ -16,7 +18,6 @@ export const GET = async()=>
 export const POST = async(req:NextRequest)=>{
     const body = await req.json();
     const accountField = body?.account; 
-    console.log("incomming request")
     if (!accountField) throw new Error('missing account');
 
     
@@ -28,7 +29,12 @@ export const POST = async(req:NextRequest)=>{
       })
       
     const transaction = new Transaction();
+  
+    const connection = new Connection("https://api.devnet.solana.com")
+    const bh = await connection.getLatestBlockhash();
+    transaction.recentBlockhash = bh.blockhash;
     transaction.add(ix);
+
 
     const serializedTransaction = transaction.serialize()
 
