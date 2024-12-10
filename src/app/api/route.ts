@@ -33,6 +33,7 @@ export const POST = async(req:NextRequest)=>{
     const connection = new Connection("https://api.devnet.solana.com")
     const bh = await connection.getLatestBlockhash();
     transaction.recentBlockhash = bh.blockhash;
+    transaction.feePayer = sender;
     transaction.add(ix);
 
 
