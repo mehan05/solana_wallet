@@ -16,6 +16,7 @@ export const GET = async()=>
 export const POST = async(req:NextRequest)=>{
     const body = await req.json();
     const accountField = body?.account; 
+    console.log("incomming request")
     if (!accountField) throw new Error('missing account');
 
     
