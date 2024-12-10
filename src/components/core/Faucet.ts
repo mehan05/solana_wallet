@@ -1,6 +1,9 @@
 import { clusterApiUrl, Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js"
 import { toast } from "sonner";
-
+interface AirdropError extends Error {
+    statusCode?: number;
+  }
+  
 export const Faucet = async(address:string,amount:number)=>{
     
     try {
@@ -17,7 +20,7 @@ export const Faucet = async(address:string,amount:number)=>{
         if(error instanceof Error)
         {
             console.log(error);
-            if((error as any).statusCode === 429){
+            if((error as AirdropError).statusCode === 429){
                 toast.warning("Limit reached try after some time");
             }
             toast.error("Error in Air Dropping");

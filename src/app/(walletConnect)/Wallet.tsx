@@ -50,7 +50,7 @@ export const WalletConnector = ({children}:{children:React.ReactNode})=>{
       else{
         localStorage.setItem("WalletConnected","false");
       }
-    },[])
+    },[connected])
 
     useEffect(() => {
       setIsClient(true); 
