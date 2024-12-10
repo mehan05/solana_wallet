@@ -6,21 +6,19 @@ import { useAtom } from "jotai";
 import { useRecoilValue } from "recoil";
 import { toast } from "sonner";
 
-export const SendSOl =async (address:string, amount:number)=>{
-    const {signTransaction} = useWallet();
+export const SendSOl =async (publicKey:PublicKey|null,signTransaction:typeof Wallet["signTransaction"],address:string, amount:number)=>{
 
     try {
-        
         const recipentAddress = new PublicKey(address);
         const Lamports = amount*LAMPORTS_PER_SOL;
-        const [WalletDetails] = useAtom(CoreDetails);
      
         const connection = new Connection(clusterApiUrl("devnet"));
-        if(!WalletDetails || !WalletDetails.publicKey) return toast.error("Wallet Not connected");
+      
 
-        const SendersPublicKey = new PublicKey(WalletDetails.publicKey);
+        const SendersPublicKey =publicKey;
         
         const transaction = new Transaction();
+
         transaction.feePayer = SendersPublicKey;
         const {blockhash} = await connection.getLatestBlockhash();
         transaction.recentBlockhash = blockhash;
@@ -44,6 +42,8 @@ export const SendSOl =async (address:string, amount:number)=>{
         const signature = await connection.sendRawTransaction(signedTransaction.serialize());
 
         await connection.confirmTransaction(signature);
+
+        return true;
     } catch (error) {
         console.log(error);
         toast.error("Error While sending money");

@@ -3,6 +3,7 @@ import {  SendSOl } from "@/components/core/send"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { useWallet } from "@solana/wallet-adapter-react"
 import { ArrowLeft } from 'lucide-react'
 import Link from "next/link"
 import { useState } from "react"
@@ -15,12 +16,14 @@ interface SendTransactionProps {
 export default  function SendTransaction({ onBack }: SendTransactionProps) {
   const[recepientAddress,setRecepientAddress] = useState<string>("");
   const[amount,setAmount] = useState<number>(0);
+  const {publicKey,signTransaction} = useWallet();
   const handleSend = async ()=>{
     try {
       
-      const response = await SendSOl(recepientAddress,amount);
+      const response = await SendSOl(publicKey,signTransaction,recepientAddress,amount);
       if(response) toast.success("SOL Sent");
       else toast.warning("Problem in Sending SOL")
+      
     } catch (error) {
       console.log(error);
           toast.error("Error in Sending SOL");
