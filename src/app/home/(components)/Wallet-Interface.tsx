@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Copy } from 'lucide-react'
 import { useState } from "react"
-import SendTransaction from "../../send/page"
 import Link from "next/link"
 
 export function WalletInterface() {

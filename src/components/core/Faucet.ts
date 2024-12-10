@@ -13,12 +13,15 @@ export const Faucet = async(address:string,amount:number)=>{
              await connection.confirmTransaction(signature);
              toast.success(`${lamports} Air Dropped`);
         
-    } catch (error:any) {
-        console.log(error);
-        if(error.statusCode === 429){
-            toast.warning("Limit reached try after some time");
+    } catch (error:unknown) {
+        if(error instanceof Error)
+        {
+            console.log(error);
+            if((error as any).statusCode === 429){
+                toast.warning("Limit reached try after some time");
+            }
+            toast.error("Error in Air Dropping");
+            return;
         }
-        toast.error("Error in Air Dropping");
-        return;
     }
 }   
