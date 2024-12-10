@@ -4,14 +4,10 @@ import { Faucet } from "@/components/core/Faucet"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { CoreDetails } from "@/store/atom"
-import { useConnection, useWallet } from "@solana/wallet-adapter-react"
-import { clusterApiUrl, LAMPORTS_PER_SOL } from "@solana/web3.js"
 import { ArrowLeft } from 'lucide-react'
 import Link from "next/link"
 import { useState } from "react"
-import { useRecoilValue } from "recoil"
-import { toast } from "sonner"
+
 
 interface ButTransactionProps {
   onBack: () => void
@@ -20,8 +16,7 @@ interface ButTransactionProps {
 export default  function ButTransaction({ onBack }: ButTransactionProps) {
     const [amount, setAmount] = useState(0)
     const[address,setAddress] = useState("");
-    const {publicKey} = useWallet();
-    const {connection} = useConnection();
+
 
   return (
     <div className="flex items-center justify-center min-h-screen shadow-lg shadow-purple-600">

@@ -2,10 +2,8 @@
 import { ConnectionProvider, useWallet, WalletProvider } from '@solana/wallet-adapter-react'
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
 import { clusterApiUrl } from '@solana/web3.js'
-import { useAtom } from 'jotai';
 import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react'
-import { RecoilRoot, useSetRecoilState } from 'recoil';
 import '@solana/wallet-adapter-react-ui/styles.css';
 
 const Wallet = ({children}:{children:React.ReactNode}) => {
@@ -33,7 +31,7 @@ const DynamicWalletButton = dynamic(
 )
 
 export const WalletConnector = ({children}:{children:React.ReactNode})=>{
-    const {publicKey,connected,signTransaction,disconnect,wallet} = useWallet();
+    const {publicKey,connected,wallet} = useWallet();
     const [isClient, setIsClient] = useState(false);
    
 
