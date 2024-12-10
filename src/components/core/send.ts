@@ -1,9 +1,5 @@
 import Wallet from "@/app/(walletConnect)/Wallet";
-import { CoreDetails } from "@/store/atom";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, Connection, LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from "@solana/web3.js"
-import { useAtom } from "jotai";
-import { useRecoilValue } from "recoil";
 import { toast } from "sonner";
 
 export const SendSOl =async (publicKey:PublicKey|null,signTransaction:typeof Wallet["signTransaction"],address:string, amount:number)=>{

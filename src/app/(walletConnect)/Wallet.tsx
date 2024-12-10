@@ -1,5 +1,4 @@
 "use client";
-import { CoreDetails } from '@/store/atom';
 import { ConnectionProvider, useWallet, WalletProvider } from '@solana/wallet-adapter-react'
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
 import { clusterApiUrl } from '@solana/web3.js'
@@ -36,24 +35,7 @@ const DynamicWalletButton = dynamic(
 export const WalletConnector = ({children}:{children:React.ReactNode})=>{
     const {publicKey,connected,signTransaction,disconnect,wallet} = useWallet();
     const [isClient, setIsClient] = useState(false);
-    const [coreDetails,setCoreDetails] =  useAtom(CoreDetails);
-    useEffect(() => {
-      if(wallet)
-      {
-        setCoreDetails({
-          publicKey:publicKey? publicKey.toString():null
-        });
-      }
-      else{
-        setCoreDetails({
-          publicKey:null
-        });
-      }
-    },[wallet,setCoreDetails])
-  
-    useEffect(() => {
-      console.log(coreDetails)
-    },[wallet]);
+   
 
     useEffect(() => {
       if(localStorage.getItem("WalletConnected") === "true"){

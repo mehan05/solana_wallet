@@ -1,7 +1,4 @@
-import { CoreDetails } from "@/store/atom";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react"
 import { clusterApiUrl, Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js"
-import { useRecoilValue } from "recoil";
 import { toast } from "sonner";
 
 export const Faucet = async(address:string,amount:number)=>{
