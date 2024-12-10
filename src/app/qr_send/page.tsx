@@ -7,7 +7,7 @@ import React from 'react'
 
 const ScanQR = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen shadow-lg shadow-purple-600">
+    <div className="flex items-center justify-center min-h-screen shadow-lg shadow-purple-600 w-full">
 
         <Card className="w-full max-w-md bg-black border-gray-800 ">
           <CardHeader className="flex flex-row items-center space-x-4 p-6">

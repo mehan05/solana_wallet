@@ -1,11 +1,12 @@
 "use client"
-import { send } from "@/components/core/send"
+import {  SendSOl } from "@/components/core/send"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { ArrowLeft } from 'lucide-react'
 import Link from "next/link"
 import { useState } from "react"
+import { toast } from "sonner"
 
 interface SendTransactionProps {
   onBack: () => void
@@ -14,8 +15,19 @@ interface SendTransactionProps {
 export default  function SendTransaction({ onBack }: SendTransactionProps) {
   const[recepientAddress,setRecepientAddress] = useState<string>("");
   const[amount,setAmount] = useState<number>(0);
+  const handleSend = async ()=>{
+    try {
+      
+      const response = await SendSOl(recepientAddress,amount);
+      if(response) toast.success("SOL Sent");
+      else toast.warning("Problem in Sending SOL")
+    } catch (error) {
+      console.log(error);
+          toast.error("Error in Sending SOL");
+    }
+  }
   return (
-    <div className="flex items-center justify-center min-h-screen shadow-lg shadow-purple-600">
+    <div className="flex items-center justify-center min-h-screen shadow-lg shadow-purple-600 w-full">
 
       <Card className="w-full max-w-md bg-black border-gray-800 ">
         <CardHeader className="flex flex-row items-center space-x-4 p-6">
@@ -52,7 +64,7 @@ export default  function SendTransaction({ onBack }: SendTransactionProps) {
             />
           </div>
 
-          <Button  onClick={()=>send(recepientAddress,amount)} className="w-full bg-gray-900 text-gray-400 hover:bg-gray-800">
+          <Button onClick={handleSend} className="w-full bg-gray-900 text-gray-400 hover:bg-gray-800">
             Send
           </Button>
         </CardContent>
