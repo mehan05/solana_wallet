@@ -1,4 +1,4 @@
-import WalletHook from "@/hooks/walletHook";
+import CustomHookWallet from "@/hooks/CustomHookWallet";
 import { Connection, PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import {  NextRequest, NextResponse } from "next/server";
 
@@ -14,12 +14,10 @@ export const GET = async()=>
       icon,
   });
 }
-
-
 export const POST = async(req:NextRequest)=>{
     const body = await req.json();
     const accountField = body?.account; 
-    const{publicKey,sendTransaction,signTransaction} = WalletHook();
+    const{publicKey,sendTransaction,signTransaction} = CustomHookWallet();
 
     if (!accountField) throw new Error('missing account');
     if (!publicKey || !sendTransaction|| !signTransaction ) throw new Error('missing account');
