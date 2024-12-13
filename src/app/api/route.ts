@@ -17,10 +17,8 @@ export const GET = async()=>
 export const POST = async(req:NextRequest)=>{
     const body = await req.json();
     const accountField = body?.account; 
-    const{publicKey,sendTransaction,signTransaction} = CustomHookWallet();
 
     if (!accountField) throw new Error('missing account');
-    if (!publicKey || !sendTransaction|| !signTransaction ) throw new Error('missing account');
     
     
     const sender = new PublicKey(accountField);
@@ -30,7 +28,7 @@ export const POST = async(req:NextRequest)=>{
         lamports: 133700000 
       })
       
-    const transaction = new Transaction();
+    let transaction = new Transaction();
   
     const connection = new Connection("https://api.devnet.solana.com")
     const bh = await connection.getLatestBlockhash();
@@ -39,16 +37,22 @@ export const POST = async(req:NextRequest)=>{
 
     transaction.add(ix);
 
-    const sendTransactions = await signTransaction(transaction);
-    const  signature = await connection.sendRawTransaction(sendTransactions.serialize());
 
+    transaction = Transaction.from(transaction.serialize({
+      verifySignatures: false,
+      requireAllSignatures: false,
+    }));
 
-    const serializedTransaction = transaction.serialize()
+    transaction.sign(merchant);
 
-    const base64Transaction = Buffer.from(serializedTransaction).toString('base64');
-    const message = 'Thank you for your purchase of ExiledApe #518';
+    const serializedTransaction = transaction.serialize({
+      verifySignatures: false,
+      requireAllSignatures: false,
+    });
 
-    await connection.confirmTransaction(signature);
+    const base64Transaction = serializedTransaction.toString('base64');
+    const message = 'Thank you for using AndyPay';
+
 
    return  NextResponse.json({ transaction: base64Transaction, message });
 }
