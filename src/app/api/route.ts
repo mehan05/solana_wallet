@@ -1,3 +1,4 @@
+import WalletHook from "@/hooks/walletHook";
 import { Connection, PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import {  NextRequest, NextResponse } from "next/server";
 
@@ -18,14 +19,17 @@ export const GET = async()=>
 export const POST = async(req:NextRequest)=>{
     const body = await req.json();
     const accountField = body?.account; 
-    if (!accountField) throw new Error('missing account');
+    const{publicKey,sendTransaction,signTransaction} = WalletHook();
 
+    if (!accountField) throw new Error('missing account');
+    if (!publicKey || !sendTransaction|| !signTransaction ) throw new Error('missing account');
+    
     
     const sender = new PublicKey(accountField);
     const ix = SystemProgram.transfer({
         fromPubkey: sender,
-        toPubkey: new PublicKey("Ed59fPEf2dBjfwKHEJJWZBoWvzi8ieGJ9Rm1xcf1beSC"),
-        lamports: 133700000
+        toPubkey: publicKey,
+        lamports: 133700000 
       })
       
     const transaction = new Transaction();
@@ -34,13 +38,19 @@ export const POST = async(req:NextRequest)=>{
     const bh = await connection.getLatestBlockhash();
     transaction.recentBlockhash = bh.blockhash;
     transaction.feePayer = sender;
+
     transaction.add(ix);
+
+    const sendTransactions = await signTransaction(transaction);
+    const  signature = await connection.sendRawTransaction(sendTransactions.serialize());
 
 
     const serializedTransaction = transaction.serialize()
 
     const base64Transaction = Buffer.from(serializedTransaction).toString('base64');
     const message = 'Thank you for your purchase of ExiledApe #518';
+
+    await connection.confirmTransaction(signature);
 
    return  NextResponse.json({ transaction: base64Transaction, message });
 }
