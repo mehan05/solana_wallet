@@ -36,22 +36,22 @@ export const WalletConnector = ({children}:{children:React.ReactNode})=>{
     const {publicKey,connected,wallet} = useWallet();
     const [isClient, setIsClient] = useState(false);
    
-    useEffect(() => {
-          const sendPubKey = async()=>{
-            try {
+    // useEffect(() => {
+    //       const sendPubKey = async()=>{
+    //         try {
               
-              if(publicKey)
-              {
-                await axios.post("http://localhost:3000/api",{publicKey:publicKey})
-                console.log("request sent");
-              }
-            } catch (error) {
-                console.log(error);
-                toast.error("Something went wrong cant send public key. Try again");
-            }
-          }
-          sendPubKey();
-    },[wallet])
+    //           if(publicKey)
+    //           {
+    //             await axios.post("http://localhost:3000/api",{publicKey:publicKey})
+    //             console.log("request sent");
+    //           }
+    //         } catch (error) {
+    //             console.log(error);
+    //             toast.error("Something went wrong cant send public key. Try again");
+    //         }
+    //       }
+    //       sendPubKey();
+    // },[wallet])
 
     useEffect(() => {
       if(localStorage.getItem("WalletConnected") === "true"){

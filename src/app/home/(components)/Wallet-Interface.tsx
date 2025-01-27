@@ -2,12 +2,11 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Copy } from 'lucide-react'
-import { useState } from "react"
 import Link from "next/link"
 
 export function WalletInterface() {
-  const [address] = useState("0x1234...5678")
-  const [balance] = useState("1000 SOL")
+  const address = "0x1234...5678";
+const balance = "1000 SOL";
   const copyAddress = async () => {
     try {
       await navigator.clipboard.writeText(address)
@@ -39,7 +38,7 @@ export function WalletInterface() {
           <p className="text-center text-gray-400 mt-2">{balance}</p>
         </div>
 
-        <div className="grid grid-cols-5 gap-2">
+        <div className="flex justify-between  gap-5">
         <Link href="/send">
           
           <Button
@@ -59,15 +58,7 @@ export function WalletInterface() {
           </Button>
         </Link>
          
-        <Link href="/swap" className="ml-2">
-          
-          <Button
-              variant="outline"
-              className="bg-gray-900 border-gray-700 text-gray-400 hover:bg-gray-800"
-          >
-              Swap
-          </Button>
-        </Link>
+       
         <Link href="/buy">
           
           <Button
